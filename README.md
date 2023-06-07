@@ -156,6 +156,8 @@ Time: 298.856 ms
 4. Add a Local DBMS named "test", version 5.8.0 (latest)
 5. Do not Start it yet, first we need to import the data
 
+![Welcome Screen](1-neo4j-welcome-screen.png)
+
 ```sh
 cd ~/Library/Application\ Support/Neo4j\ Desktop/Application/relate-data/dbmss/dbms-*/import
 echo ":START_ID(User),:END_ID(User),:TYPE" > friendships_header.csv
@@ -227,13 +229,28 @@ Peak memory usage: 562.8MiB
 
 Now, `Start` the `test` database in Neo4j and then `Open`.
 
+![After Import](2-neo4-after-import.png)
+
 ```cypher
 MATCH (user:User {id: '73665'})-[:FRIENDS_WITH*3..3]->(fof)
 RETURN COUNT(DISTINCT fof)
 ```
 
+![User 73665 Query OK](3-neo4j-user-73665-query-ok.png)
+
 ```cypher
 MATCH (user:User {id: '5867'})-[:FRIENDS_WITH*3..3]->(fof)
 RETURN COUNT(DISTINCT fof)
 ```
+
+![User 5867 Query Failed](4-neo4j-user-5867-query-failed.png)
+
+Now, if we test the query that worked before, it now fails for some reason:
+
+```cypher
+MATCH (user:User {id: '73665'})-[:FRIENDS_WITH*3..3]->(fof)
+RETURN COUNT(DISTINCT fof)
+```
+
+![User 73665 Query Failed](5-neo4j-user-73665-query-failed.png)
 
