@@ -236,6 +236,8 @@ MATCH (user:User {id: '73665'})-[:FRIENDS_WITH*3..3]->(fof)
 RETURN COUNT(DISTINCT fof)
 ```
 
+
+
 ![User 73665 Query OK](3-neo4j-user-73665-query-ok.png)
 
 ```cypher
@@ -254,3 +256,10 @@ RETURN COUNT(DISTINCT fof)
 
 ![User 73665 Query Failed](5-neo4j-user-73665-query-failed.png)
 
+```cypher
+CREATE INDEX FOR (n:User) ON (n.id)
+```
+
+Adding this index improved Neo4j performance of the 73665 query from 819 ms down to 528 ms, still slower than PostgreSQL, 299 ms.
+
+If you see any obvious errors in this benchmark or have other suggestions, please contact me at joel at compiler dot org, thanks.
